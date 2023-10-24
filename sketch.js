@@ -1,5 +1,5 @@
-let table;
-
+let table; // Table of anxious thoughts
+let thoughtImage; // Image of thought bubble
 let video;  // webcam input
 let cropped;// webcam input cropped to face
 let model;  // BlazeFace machine-learning model
@@ -10,8 +10,9 @@ let aspectRatio; // aspect ratio of webcam input
 let hasFace = true;
 
 function preload() {
-  table = loadTable("HW2---text-csv/texts.csv", "csv");
+  table = loadTable("HW2---text-csv/texts.csv", "csv", "None");
   console.log(table);
+  thoughtImage = loadImage("thought.svg")
 }
 
 function setup() {
@@ -26,8 +27,10 @@ function setup() {
   // load the BlazeFace model
   loadFaceModel();
 
-  // Canvas for sketch
+  textSize(8);
+  textStyle(BOLD);
 
+  // Canvas for sketch fit to window
   let startWidth = windowWidth;
   let startHeight = startWidth / aspectRatio;
 
@@ -124,12 +127,30 @@ function draw() {
       // Draw bounding box around face
       rect(topLeft.x, topLeft.y, faceWidth, faceHeight);
 
+      push();
+      rectMode(CENTER);
+      imageMode(CENTER);
+      textAlign(CENTER, CENTER);
+      translate(topLeft.x + faceWidth/3, topLeft.y - 100)
+
       fill(255);
-      stroke(0);
-      image("thought-bubble.png", topLeft.x, topLeft.y-50);
-      // rect(topLeft.x, topLeft.y-50, 300, 40);
-      fill(0);
-      text("FML", 5 + (topLeft.x + faceWidth / 5), topLeft.y-30)
+      noStroke();
+      
+      image(thoughtImage, 0, 0, faceWidth);
+
+        push();
+
+        fill(0);
+
+        // let randNum = int(random(0, table.getRowCount() - 1));
+        // console.log(randNum);
+        let thoughtText = table.getRow(j).arr[0];
+        // console.log(thoughtText);
+        text(thoughtText, 0, -20, faceWidth - 20, 30);
+
+        pop();
+
+      pop();
       
       // Draw Circle over mouth
       // circle(lips.x, lips.y, 20);
