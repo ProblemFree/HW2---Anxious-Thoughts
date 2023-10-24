@@ -1,4 +1,5 @@
 let table; // Table of anxious thoughts
+let tableArray = []; // Table in array form
 let thoughtImage; // Image of thought bubble
 let video;  // webcam input
 let cropped;// webcam input cropped to face
@@ -16,6 +17,10 @@ function preload() {
 }
 
 function setup() {
+  tableToArray(table);
+  shuffle(tableArray);
+  console.log(tableArray);
+
   video = createCapture(VIDEO);
   // video.size(1920,1080);
   aspectRatio = video.width / video.height;
@@ -144,7 +149,7 @@ function draw() {
 
         // let randNum = int(random(0, table.getRowCount() - 1));
         // console.log(randNum);
-        let thoughtText = table.getRow(j).arr[0];
+        let thoughtText = tableArray[j];
         // console.log(thoughtText);
         text(thoughtText, 0, -20, faceWidth - 20, 30);
 
@@ -223,3 +228,9 @@ async function getFaces() {
   }
 }
 
+
+function tableToArray(t) {
+   for (let i = 0; i < t.getRowCount(); i++) {
+    tableArray.push(t.getRow(i).arr[0]);
+   }
+}
