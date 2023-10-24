@@ -11,6 +11,7 @@ let hasFace = true;
 
 function preload() {
   table = loadTable("HW2---text-csv/texts.csv", "csv");
+  console.log(table);
 }
 
 function setup() {
