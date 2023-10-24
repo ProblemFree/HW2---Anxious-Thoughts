@@ -192,10 +192,6 @@ function scalePoint(pt) {
 //   return createVector(x, y);
 // }
 
-function getText() {
-  
-}
-
 
 // like loading the model, TensorFlow requires
 // we get the face data using an async function
