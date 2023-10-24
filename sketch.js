@@ -35,6 +35,7 @@ function setup() {
     startHeight = windowHeight;
     startWidth = startHeight * aspectRatio;
   }
+
   createCanvas(startWidth, startHeight);
 }
 
@@ -125,7 +126,8 @@ function draw() {
 
       fill(255);
       stroke(0);
-      rect(topLeft.x + faceWidth / 5, topLeft.y-50, 200, 40);
+      image("thought-bubble.png", topLeft.x, topLeft.y-50);
+      // rect(topLeft.x, topLeft.y-50, 300, 40);
       fill(0);
       text("FML", 5 + (topLeft.x + faceWidth / 5), topLeft.y-30)
       
