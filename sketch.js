@@ -1,4 +1,4 @@
-import "texts.csv";
+let table;
 
 let video;  // webcam input
 let cropped;// webcam input cropped to face
@@ -9,6 +9,9 @@ let aspectRatio; // aspect ratio of webcam input
 // print details when a face is first found
 let hasFace = true;
 
+function preload() {
+  table = loadTable("/style.css", "csv");
+}
 
 function setup() {
   video = createCapture(VIDEO);
