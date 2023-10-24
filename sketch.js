@@ -10,7 +10,7 @@ let aspectRatio; // aspect ratio of webcam input
 let hasFace = true;
 
 function preload() {
-  table = loadTable("/style.css", "csv");
+  table = loadTable("HW2---text-csv/texts.csv", "csv", "csv");
 }
 
 function setup() {
