@@ -129,7 +129,7 @@ function draw() {
       text("FML", 5 + (topLeft.x + faceWidth / 5), topLeft.y-30)
       
       // Draw Circle over mouth
-      circle(lips.x, lips.y, 20);
+      // circle(lips.x, lips.y, 20);
     }
   }
   else {
