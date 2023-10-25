@@ -10,6 +10,9 @@ let aspectRatio; // aspect ratio of webcam input
 // print details when a face is first found
 let hasFace = true;
 
+// track if face bounding box should be visible
+let showBounds = false;
+
 function preload() {
   table = loadTable("HW2---text-csv/texts.csv", "csv", "None");
   console.log(table);
@@ -18,7 +21,7 @@ function preload() {
 
 function setup() {
   tableToArray(table);
-  shuffle(tableArray);
+  tableArray = shuffle(tableArray);
   console.log(tableArray);
 
   video = createCapture(VIDEO);
@@ -32,7 +35,7 @@ function setup() {
   // load the BlazeFace model
   loadFaceModel();
 
-  textSize(8);
+  textSize(12);
   textStyle(BOLD);
 
   // Canvas for sketch fit to window
@@ -130,18 +133,21 @@ function draw() {
       stroke(255,0,0);
 
       // Draw bounding box around face
-      rect(topLeft.x, topLeft.y, faceWidth, faceHeight);
+      if (showBounds) {
+        rect(topLeft.x, topLeft.y, faceWidth, faceHeight);
+      }
 
+      // Code for displaying text box over face
       push();
       rectMode(CENTER);
       imageMode(CENTER);
       textAlign(CENTER, CENTER);
-      translate(topLeft.x + faceWidth/3, topLeft.y - 100)
+      translate(topLeft.x + faceWidth/2, topLeft.y - 200)
 
       fill(255);
       noStroke();
       
-      image(thoughtImage, 0, 0, faceWidth);
+      image(thoughtImage, 0, 0, 250, 250);
 
         push();
 
@@ -149,9 +155,9 @@ function draw() {
 
         // let randNum = int(random(0, table.getRowCount() - 1));
         // console.log(randNum);
-        let thoughtText = tableArray[j];
+        let thoughtText = tableArray[j % tableArray.length];
         // console.log(thoughtText);
-        text(thoughtText, 0, -20, faceWidth - 20, 30);
+        text(thoughtText, 0, -20, 200, 30);
 
         pop();
 
@@ -181,6 +187,16 @@ function resizeCanvasToWindow() {
     newWidth = newHeight * aspectRatio;
   }
   resizeCanvas(newWidth, newHeight);
+}
+
+// Function for different key presses
+function keyPressed() {
+  if (keyCode === SHIFT) {
+    tableArray = shuffle(tableArray);
+  }
+  if (keyCode === BACKSPACE) {
+    showBounds = !showBounds;
+  }
 }
 
 // Converts positions in the video to the canvas' dimensions
@@ -220,7 +236,7 @@ async function getFaces() {
     faces = [];
   }
 
-  // otherwise, grab the first face
+  // otherwise, grab the face list
   else {
     for (let j = 0; j < predictions.length; j++) {
       faces[j] = predictions[j];
